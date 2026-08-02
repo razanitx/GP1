@@ -1,0 +1,391 @@
+{% extends "base.html" %}
+
+{% block title %}AFAQ | Discover Riyadh Events{% endblock %}
+
+{% block extra_styles %}
+<style>
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: grid;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(58, 42, 31, 0.72) 20%, rgba(89, 62, 43, 0.42) 58%, rgba(184, 149, 106, 0.26) 100%),
+      url("{{ url_for('static', filename='images/hero-bj.jpg') }}") center/cover no-repeat;
+    z-index: -2;
+  }
+
+  .hero-content {
+    max-width: 980px;
+    padding: 72px 0 96px;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    margin-bottom: 22px;
+    border-radius: 999px;
+    background: rgba(255, 250, 244, 0.18);
+    border: 1px solid rgba(255, 248, 240, 0.34);
+    color: var(--text-light);
+    font-size: 0.95rem;
+    font-weight: 700;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.9rem, 7vw, 5.8rem);
+    line-height: 1.04;
+    margin-bottom: 20px;
+    letter-spacing: -2px;
+    color: var(--text-light);
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255, 248, 240, 0.9);
+    max-width: 700px;
+    margin-bottom: 32px;
+  }
+
+  .hero-buttons {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .mini-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 42px;
+    max-width: 840px;
+  }
+
+  .stat-card {
+    background: rgba(255, 250, 244, 0.14);
+    border: 1px solid rgba(255, 248, 240, 0.18);
+    backdrop-filter: blur(8px);
+    border-radius: 24px;
+    padding: 22px;
+    box-shadow: 0 12px 30px rgba(38, 26, 18, 0.12);
+  }
+
+  .stat-card strong {
+    display: block;
+    font-size: 1.6rem;
+    margin-bottom: 8px;
+    color: var(--text-light);
+  }
+
+  .stat-card span {
+    color: rgba(255, 248, 240, 0.86);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .about-section {
+    position: relative;
+    margin-top: 90px;
+    padding: 90px 0;
+    overflow: hidden;
+  }
+
+  .about-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(rgba(20, 16, 12, 0.74), rgba(20, 16, 12, 0.74)),
+      url("{{ url_for('static', filename='images/about-bg.jpg') }}") center/cover no-repeat;
+    z-index: -2;
+  }
+
+  .about-heading {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 36px;
+    color: var(--text-light);
+  }
+
+  .about-heading h2 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    margin-bottom: 14px;
+    letter-spacing: -1px;
+  }
+
+  .about-heading p {
+    color: rgba(255, 248, 240, 0.9);
+    line-height: 1.9;
+    font-size: 1rem;
+  }
+
+  .about-strip {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 28px;
+  }
+
+  .info-box {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    backdrop-filter: blur(14px);
+    border-radius: 30px;
+    padding: 34px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+  }
+
+  .info-box h3 {
+    font-size: 1.8rem;
+    margin-bottom: 18px;
+    color: var(--text-light);
+  }
+
+  .info-box p,
+  .info-box li {
+    color: rgba(255,255,255,0.88);
+    line-height: 1.9;
+    font-size: 1rem;
+  }
+
+  .info-box ul {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    margin-top: 8px;
+  }
+
+
+  .top-rated-section {
+    padding: 78px 0 84px;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(184, 149, 106, 0.14), transparent 34%),
+      linear-gradient(180deg, #f8f2eb 0%, #f2e9dd 100%);
+    border-top: 1px solid rgba(184, 149, 106, 0.16);
+    border-bottom: 1px solid rgba(184, 149, 106, 0.16);
+  }
+
+  .top-rated-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .top-rated-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    background: rgba(184, 149, 106, 0.14);
+    color: var(--accent-dark);
+    font-weight: 800;
+    font-size: 0.86rem;
+    margin-bottom: 12px;
+  }
+
+  .top-rated-heading h2 {
+    font-size: clamp(2rem, 4.6vw, 4rem);
+    line-height: 1.1;
+    letter-spacing: -1px;
+    color: var(--text-main);
+  }
+
+  .top-rated-heading p {
+    max-width: 520px;
+    color: var(--text-soft);
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+
+  .top-rated-card {
+    position: relative;
+  }
+
+  .top-rated-rank {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: var(--text-light);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    box-shadow: 0 12px 24px rgba(58, 42, 31, 0.24);
+  }
+
+  .rating-badge-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 13px;
+    border-radius: 999px;
+    background: rgba(184, 149, 106, 0.14);
+    border: 1px solid rgba(184, 149, 106, 0.24);
+    color: var(--accent-dark);
+    font-weight: 800;
+    font-size: 0.9rem;
+    margin-bottom: 14px;
+  }
+
+  .top-rated-empty {
+    background: var(--bg-card);
+    border: 1px dashed var(--accent-soft);
+    color: var(--text-soft);
+    border-radius: 24px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  @media (max-width: 700px) {
+    .top-rated-heading {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero" id="home">
+  <div class="page-shell">
+    <div class="hero-content">
+      <div class="eyebrow">Riyadh • Curated Local Experiences</div>
+      <h1>Elevating Riyadh Experiences, Crafting Memories.</h1>
+      <p>
+        AFAQ brings together a wide range of activities, allowing users to easily browse, search, and access event information through a clear and organized experience.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="{{ url_for('events.events_page') }}" class="solid-btn">Explore Events</a>
+        <a href="#about" class="outline-btn">About AFAQ</a>
+      </div>
+
+      <div class="mini-stats">
+        <div class="stat-card">
+          <strong>Explore Riyadh</strong>
+          <span>Discover a wide range of events happening across Riyadh in one unified platform.</span>
+        </div>
+        <div class="stat-card">
+          <strong>Personalized Experience</strong>
+          <span>Get event suggestions and browsing experience tailored to your interests and preferences.</span>
+        </div>
+        <div class="stat-card">
+          <strong>Track Events</strong>
+          <span>Keep track of your favorite events and plan your schedule.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="top-rated-section" id="top-rated">
+  <div class="page-shell">
+    <div class="top-rated-heading">
+      <div>
+        <span class="top-rated-kicker">⭐ User Favorites</span>
+        <h2>Top Rated Events</h2>
+        <p>
+        Discover the highest-rated Riyadh events based on user feedback and ratings.</p>
+      </div>
+      
+    </div>
+
+    {% if top_rated_events %}
+      <div class="events-grid">
+        {% for item in top_rated_events %}
+        <article class="event-card top-rated-card">
+          <span class="top-rated-rank">{{ loop.index }}</span>
+
+          <div class="event-image-wrap">
+            {% if item.event.image %}
+              <img src="{{ item.event.image }}" alt="{{ item.event.title }}">
+            {% else %}
+              <img src="https://via.placeholder.com/600x400?text=Event+Image" alt="Event Image">
+            {% endif %}
+            <span class="event-badge">Top Rated</span>
+          </div>
+
+          <div class="event-content">
+            <div class="rating-badge-home">
+              ⭐ {{ item.avg_rating }}/5
+              <span>({{ item.ratings_count }} {{ 'rating' if item.ratings_count == 1 else 'ratings' }})</span>
+            </div>
+
+            <div class="event-meta">
+              <span class="event-pill">{{ item.event.category }}</span>
+              <span class="event-pill">{{ item.event.city }}</span>
+            </div>
+
+            <h3>{{ item.event.title }}</h3>
+            <p>{{ item.event.description[:100] if item.event.description else 'Discover a highly rated Riyadh event.' }}...</p>
+
+            <div class="event-bottom">
+              <span class="date-tag">📅 {{ item.event.start_date }}</span>
+            </div>
+
+            <div style="margin-top: 18px;">
+              <a href="{{ url_for('events.event_details', event_id=item.event.id) }}" class="primary-btn">View Details</a>
+            </div>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="top-rated-empty">
+        No rated events yet. Once users rate events, the top 3 will appear here automatically.
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+
+
+<section class="about-section" id="about">
+  <div class="page-shell">
+    <div class="about-heading">
+      <h2>About AFAQ</h2>
+      <p>
+        AFAQ is built to simplify event discovery in Riyadh by bringing scattered event information into one unified and engaging platform.
+      </p>
+    </div>
+
+    <div class="about-strip">
+      <div class="info-box">
+        <h3>Why AFAQ</h3>
+        <ul>
+          <li>• AFAQ provides a more personalized experience by recommending events based on user interests and activity.</li>
+          <li>• It supports features such as saving favorite events and organizing them into a personal schedule.</li>
+          <li>• It transforms event discovery into a seamless experience, helping users stay connected with what’s happening around them in Riyadh.</li>
+        </ul>
+      </div>
+
+      <div class="info-box">
+        <h3>Our Vision</h3>
+        <p>
+          AFAQ helps users explore and find events without switching between multiple websites and sources. Through a clean interface, curated previews, and intuitive browsing tools, the platform creates a smarter and more enjoyable way to discover Riyadh experiences.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
