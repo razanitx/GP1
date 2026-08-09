@@ -237,28 +237,8 @@ The platform supports modern web browsers such as:
 
 The current release supports **English only** and focuses on displaying event information through external official links rather than providing direct booking or online payment.
 
-The project does not include native mobile applications or integration with closed external systems.
 
 ---
-
-## My Contributions
-
-<!-- Add your specific contributions here -->
-
-- [Contribution 1]
-- [Contribution 2]
-- [Contribution 3]
-
----
-
-## Project Documentation
-
-The complete Graduation Project I report is available in the `docs` folder.
-
-📄 **[View AFAQ Project Documentation](docs/GP1_Group15_AFAQ_Report.pdf)**
-
----
-
 
 ## Project Status
 
@@ -267,7 +247,7 @@ The complete Graduation Project I report is available in the `docs` folder.
 ---
 
 ## Team
-د
+
 - Razan Almutairi
 - Rawasi Almutairi
 - Numayir Almoqhim
