@@ -250,7 +250,9 @@ The current release supports **English only** and focuses on displaying event in
 ### Homepage
 The main landing page of AFAQ, providing users with an overview of the platform and featured events.
 
-![AFAQ Homepage](Screenshots/homepage)
+<p align="left">
+  <img src="Screenshots/homepage.png">
+</p>
 
 ### Events
 The events page allows users to explore available events and browse event information.
