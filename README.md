@@ -250,17 +250,17 @@ The current release supports **English only** and focuses on displaying event in
 ### Homepage
 The main landing page of AFAQ, providing users with an overview of the platform and featured events.
 
-![AFAQ Homepage](screenshots/homepage.png)
+![AFAQ Homepage](Screenshots/homepage)
 
 ### Events
 The events page allows users to explore available events and browse event information.
 
-![AFAQ Events](screenshots/events.png)
+![AFAQ Events](Screenshots/events)
 
 ### Top Rated Events
 A section showcasing highly rated events based on user ratings.
 
-![AFAQ Top Rated Events](screenshots/top-rated-events.png)
+![AFAQ Top Rated Events](Screenshots/top-rated-events)
 
 ---
 
